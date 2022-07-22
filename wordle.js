@@ -5376,7 +5376,6 @@ const dictionary =
 'fuzes',
 'hurly',
 'genet',
-'hodad',
 'calix',
 'filer',
 'pawls',
@@ -5876,7 +5875,9 @@ function revealWord(guess){
     const isGameOver = state.currentRow === 5;
 
     if (isGameOver){
-        alert('U SUCK');
+        alert('U SUCK \n THE WORD WAS \n' + state.secret);
+        
+
     }
 
 

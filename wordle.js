@@ -5376,6 +5376,7 @@ const dictionary =
 'fuzes',
 'hurly',
 'genet',
+'hodad',
 'calix',
 'filer',
 'pawls',
@@ -5736,6 +5737,7 @@ const dictionary =
 'kicky',
 'taros',
 'lings',
+'taser',
 'dicky',
 'nerdy',
 'abend',
@@ -5875,7 +5877,7 @@ function revealWord(guess){
     const isGameOver = state.currentRow === 5;
 
     if (isGameOver){
-        alert('U SUCK \n THE WORD WAS \n' + state.secret);
+        alert('U SUCK\nTHE WORD WAS\n' + state.secret);
         
 
     }
@@ -5893,3 +5895,6 @@ function startup() {
 
 //anything you want that happens in the begining
 startup();
+
+
+

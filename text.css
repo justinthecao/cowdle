@@ -21,6 +21,7 @@ body{
 
 
 #game {
+    position:static;
     display: grid;
     place-items: center;
     width: 100%;
@@ -45,6 +46,7 @@ body{
     place-items: center;
     font-family: Arial, Helvetica, sans-serif;
     font-size:2.4rem;
+    border-radius: 10px;
 }
 
 .box.empty{
@@ -61,6 +63,48 @@ body{
     background: var(--right);
 }
 
+.errors{
+    position: absolute;
+    display: inline-block;
+    width: 200px;
+    height: 60px;
+    color:green;
+    font-family: sans-serif;
+    -webkit-animation: fade 3s linear;
+    animation: fade 3s linear;
+    
+
+    /* cursor: pointer; */
+}
+
+  
+  /* Popup arrow */
+  .errors.show{
+    visibility: hidden;
+  }
+  /* Toggle this class when clicking on the popup container (hide and show the popup) */
+  
+  
+  /* Add animation (fade in the popup) */
+  @-webkit-keyframes fade {
+    0%,100% {opacity: 0;}
+    1% {opacity: 1;}
+  }
+  
+  @keyframes fade {
+    0%,100% {opacity: 0;}
+    1% {opacity: 1;}
+  }
+
+  @-webkit-keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+  }
+  
+  @keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity:0 ;}
+  } 
 
 /* head{
     width: 60px;

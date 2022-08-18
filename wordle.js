@@ -115,6 +115,9 @@ async function isWordValid(word){
         .then(res => {if(res.ok) state.valid = true; else throw new Error(res.status)})
         .catch(response => {state.valid = false});
     console.log(state.valid)
+    if(word == "taser"){
+        state.valid = true;
+    }
     if(state.valid){
         revealWord(word);
         state.currentRow++;

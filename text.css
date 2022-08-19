@@ -140,6 +140,20 @@ body{
     background: var(--right);
 }
 
+.key.empty{
+    background: var(--empty);
+}
+
+
+.key.wrong{
+    background: var(--wrong);
+}
+
+
+.key.right{
+    background: var(--right);
+}
+
 .errors{
     position: absolute;
     display: inline-block;

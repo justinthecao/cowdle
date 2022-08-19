@@ -56,7 +56,7 @@ function drawBox(container, row, col, letter= ''){
 function drawKey(container, row, col, letter = ''){
     const box = document.createElement('div');
     box.className = 'key';
-    box.id = `key${row}${col}`;
+    box.id = letter;
     box.textContent = letter;
     container.appendChild(box);
     return box;
@@ -65,7 +65,7 @@ function drawKey(container, row, col, letter = ''){
 function drawEnter(container, row, col){
     const box = document.createElement('div');
     box.className = 'enterkey keyboard3';
-    box.id = `key${row}${col}`;
+    box.id = `enter`;
     box.textContent = "enter";
     container.appendChild(box);
     return box;
@@ -74,17 +74,17 @@ function drawEnter(container, row, col){
 function drawBackspace(container, row, col){
     const box = document.createElement('div');
     box.className = 'backspace keyboard3';
-    box.id = `key${row}${col}`;
+    box.id = `backspace`;
     container.appendChild(box);
     return box;
 }
 
 function clicked(){
-    console.log(this.id);
-    console.log(this.textContent)
+    console.log("this is id "+ this.id);
+    console.log(this.textContent);
     const id = this.id;
-    if(id == "key20" || id == "key28" ){
-        if(id == "key20"){
+    if(id == "enter" || id == "backspace" ){
+        if(id == "enter"){
             
             if (state.currentCol === 5){
                 const word = getCurrentWord();
@@ -96,7 +96,7 @@ function clicked(){
                 else {isWordValid(word)}
             }
         }
-        if (id === "key28"){
+        if (id === "backspace"){
             removeLetter();
         }
     }
@@ -218,6 +218,7 @@ async function isWordValid(word){
     }
     if(state.valid){
         revealWord(word);
+        
         state.currentRow++;
         state.currentCol = 0;
         state.valid = false;
@@ -226,12 +227,8 @@ async function isWordValid(word){
         errorPopUp(game);
     }
 }
-function updateKeyboard(){
-    
 
 
-
-}
 
 
 function revealWord(guess){
@@ -239,14 +236,21 @@ function revealWord(guess){
 
     for(let i = 0; i < 5; i++){
         const box = document.getElementById(`box${row}${i}`);
+        const key = document.getElementById(guess.charAt(i));
+        console.log("this is the guess " + guess.charAt(i));
         const letter = box.textContent;
 
         if (letter === state.secret[i]){
             box.classList.add('right');
+            key.classList.add('right');
+            
         } else if (state.secret.includes(letter)){
             box.classList.add('wrong');
+
+            key.classList.add('wrong');
         } else{
             box.classList.add('empty');
+            key.classList.add('empty');
 
 
         }

@@ -259,7 +259,7 @@ function revealWord(guess){
     const isGameOver = state.currentRow === 5;
     
   
-        if (isGameOver){
+        if (isGameOver && guess != state.secret){
         alert('YOU SUCK \n YOU NEED A LIFE \nTHE SECRET WORD WAS \n' + state.secret )
         }
  

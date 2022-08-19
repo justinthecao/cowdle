@@ -19,10 +19,14 @@ const options = {
 };
 getWord()
 
+
+
+
+
 async function getWord(){
-    const wait = await fetch('https://random-words5.p.rapidapi.com/getRandom?wordLength=5', options);
-    const word = await wait.text();
-    state.secret = word;
+    const wait = await fetch('https://random-word-api.herokuapp.com/word?length=5');
+    const word = await wait.json();
+    state.secret = word[0];
 	console.log("this is secret" + state.secret);
 }
 
@@ -40,7 +44,7 @@ function updateGrid(){
 
 
 //takes four arguments container that it will be added, row column of grid, and the letter
-function drawBox(container, row, col, letter=''){
+function drawBox(container, row, col, letter= ''){
     const box = document.createElement('div');
     box.className = 'box';
     box.id = `box${row}${col}`;
@@ -48,6 +52,95 @@ function drawBox(container, row, col, letter=''){
     container.appendChild(box);
     return box;
 }
+
+function drawKey(container, row, col, letter = ''){
+    const box = document.createElement('div');
+    box.className = 'key';
+    box.id = `key${row}${col}`;
+    box.textContent = letter;
+    container.appendChild(box);
+    return box;
+}
+
+function drawEnter(container, row, col){
+    const box = document.createElement('div');
+    box.className = 'enterkey keyboard3';
+    box.id = `key${row}${col}`;
+    box.textContent = "enter";
+    container.appendChild(box);
+    return box;
+}
+
+function drawBackspace(container, row, col){
+    const box = document.createElement('div');
+    box.className = 'backspace keyboard3';
+    box.id = `key${row}${col}`;
+    container.appendChild(box);
+    return box;
+}
+
+function clicked(){
+    console.log(this.id);
+    console.log(this.textContent)
+    const id = this.id;
+    if(id == "key20" || id == "key28" ){
+        if(id == "key20"){
+            
+            if (state.currentCol === 5){
+                const word = getCurrentWord();
+                if(word == state.secret){
+                        revealWord(word);
+                        alert('YAY CONGRAGULATIONS JK')
+                   
+                }
+                else {isWordValid(word)}
+            }
+        }
+        if (id === "key28"){
+            removeLetter();
+        }
+    }
+    else{
+        addLetter(this.textContent);
+    }
+
+
+    updateGrid();
+}
+
+function drawKeyboard(container){
+    const row1 = document.createElement('div');
+    row1.className = 'keyboard1';
+    const firstrow = "qwertyuiop";
+    for (let i = 0; i < 10; i++){
+        drawKey(row1, 0, i, firstrow[i]).onclick = clicked;
+       
+    }
+    container.appendChild(row1);
+    const row2 = document.createElement('div');
+    row2.className = 'keyboard2';
+    const secondrow = "asdfghjkl";
+    for (let i = 0; i < 9; i++){
+        drawKey(row2, 1, i, secondrow[i]).onclick = clicked;
+       
+    }
+    container.appendChild(row2);
+    const row3 = document.createElement('div');
+    row3.className = 'keyboard3';
+    const thirdrow = "zxcvbnm";
+    drawEnter(row3, 2, 0, 'enter').onclick = clicked;
+
+    for (let i = 0; i < 7; i++){
+        drawKey(row3, 2, i+1, thirdrow[i]).onclick = clicked;
+       
+    }
+    drawBackspace(row3, 2,  8).onclick = clicked;
+    
+    
+    container.appendChild(row3);
+    
+}
+
 
 function drawGrid(container){
     const grid = document.createElement('div');
@@ -68,7 +161,12 @@ function registerKeyboardEvents(){
         if(key === 'Enter'){
             if (state.currentCol === 5){
                 const word = getCurrentWord();
-                isWordValid(word)
+                if(word == state.secret){
+                    revealWord(word)
+                    alert('YAY CONGRAGULATIONS JK')
+               
+            }
+            else {isWordValid(word)}
             }
         }
         if (key === 'Backspace'){
@@ -128,6 +226,13 @@ async function isWordValid(word){
         errorPopUp(game);
     }
 }
+function updateKeyboard(){
+    
+
+
+
+}
+
 
 function revealWord(guess){
     const row = state.currentRow;
@@ -147,16 +252,13 @@ function revealWord(guess){
         }
     }
 
-    const isWinner = state.secret === guess;
     const isGameOver = state.currentRow === 5;
-    if (isWinner){
-        alert('YAY CONGRAGULATIONS JK')
-    }
-    else{
+    
+  
         if (isGameOver){
         alert('YOU SUCK \n YOU NEED A LIFE \nTHE SECRET WORD WAS \n' + state.secret )
         }
-    }   
+ 
 }
 
 
@@ -182,8 +284,9 @@ function startup() {
     const game = document.getElementById('game');
     drawGrid(game);
     registerKeyboardEvents();
+    const keyboard = document.getElementById('keyboard')
+    drawKeyboard(keyboard);
     console.log(state.secret);
-    
 }
 
 //anything you want that happens in the begining

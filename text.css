@@ -1,3 +1,6 @@
+@import "/node_modules/toastify-js/src/toastify.css";
+
+
 h1{
     font-size: 300%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -5,6 +8,7 @@ h1{
     color: green;
     padding-bottom: 0%;
     margin-bottom: 10px;
+    border-color: #35359c;
 }
 
 html,
@@ -12,6 +16,7 @@ body{
     background:var(--default);
 
 }
+
 
 
 :root{
@@ -124,6 +129,10 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     font-size:2.4rem;
     border-radius: 10px;
+}
+
+.textWhite{
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .box.empty{

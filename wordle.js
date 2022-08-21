@@ -1,3 +1,5 @@
+import Toastify from './toastify-js/src/toastify-es.js'
+
 const state = {
     secret: '',
     grid: Array(6)
@@ -7,6 +9,7 @@ const state = {
     currentCol: 0,
     valid: false
 };
+
 
 
 
@@ -268,17 +271,15 @@ function revealWord(guess){
 
 
 async function errorPopUp(container){
-    const popup = document.createElement('div');
-    popup.className = 'errors';
-    popup.textContent = "NOT A VALID WORD STUPID HEAD";
-    container.appendChild(popup);
-
-
-    let promise = new Promise((resolve, reject) => {
-        setTimeout(() => resolve("done!"), 2800)
-    });
-    await promise;
-    popup.classList.toggle('show');
+    Toastify({
+        text: "NOT A VALID WORD",
+        duration: 2000,
+        className: "textWhite",
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          }
+        
+      }).showToast();
 
 
 }

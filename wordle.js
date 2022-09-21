@@ -1,39 +1,99 @@
-import Toastify from './toastify-js/src/toastify-es.js'
+
+import Toastify from '/toastify-js/src/toastify-es.js'
+
+
 
 const state = {
     secret: '',
-    grid: Array(6)
+    grid: Array(5)
     .fill()
-    .map(() => Array(5).fill('')),
+    .map(() => Array(4).fill('')),
     currentRow: 0,
     currentCol: 0,
-    valid: false
+    valid: false,
+    letters: '',
+    letterCount: '',
+    over: false,
 };
 
 
-
-
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'b1c4a03d8bmsh447cb94a8464348p12e0d1jsn6a24161449b4',
-		'X-RapidAPI-Host': 'random-words5.p.rapidapi.com'
-	}
-};
-getWord()
-
+function randomWord(arr){
+    let number = [];
+    for (var i = 0 ; i  < arr.length; i++){
+        let obj  = arr[i];
+        for(var j = 0; j < obj.length; j++){
+            let obj2 = obj[j];
+            if(obj2.word.length == 4){
+                console.log(obj2.word);
+                number.push(obj2.word);
+            }
+        }
+    }
+    let index = Math.floor(Math.random()*number.length);
+    return number[index];
+}
 
 
 
 
 async function getWord(){
-    const wait = await fetch('https://random-word-api.herokuapp.com/word?length=5');
-    const word = await wait.json();
-    state.secret = word[0];
-	console.log("this is secret" + state.secret);
+    let arr = [];
+    const call = await fetch(`https://api.datamuse.com/words?rel_trg=cow`);
+    const words = await call.json();
+    arr.push(words);
+    for(var i = 0 ; i < words.length ; i++){
+        var obj = words[i];
+        var word = obj.word;
+        console.log(word);
+        const getWord = await fetch(`https://api.datamuse.com/words?rel_trg=${word}`);
+        const json = await getWord.json();
+        arr.push(json);
+    }
+
+    state.secret = randomWord(arr);
+	return new Promise((resolve) => {
+        console.log("this is secret " + state.secret);
+        resolve();
+    });
 }
 
 
+function getLetter(){
+    let letters = state.secret.charAt(0);
+    for(let i = 1 ; i < state.secret.length; i++){
+        if(!letters.includes(state.secret.charAt(i))){
+            letters = letters + state.secret.charAt(i);
+        }
+    }
+    state.letters = letters;
+    return new Promise((resolve) => {
+        console.log("this is letters " + letters);
+        resolve();
+    });
+}
+
+function getLetterCount(){
+    let count = "";
+    for(let i = 0; i < state.letters.length; i++){
+        let num = 0;
+        for (let j = 0; j < state.secret.length; j++){
+            if (state.letters.charAt(i) == state.secret.charAt(j)){
+                num++;
+            }
+        }
+        count = count + num.toString();
+    }
+    state.letterCount = count;
+}
+
+
+async function initialSteps(){
+    const firstStep  = await getWord();
+    const secondStep = await getLetter();
+    getLetterCount();
+
+}
+initialSteps();
 
 //synchronizes state and ui, you have an object state and this function compares the current state 
 function updateGrid(){
@@ -83,32 +143,34 @@ function drawBackspace(container, row, col){
 }
 
 function clicked(){
-    console.log("this is id "+ this.id);
-    console.log(this.textContent);
-    const id = this.id;
-    if(id == "enter" || id == "backspace" ){
-        if(id == "enter"){
-            
-            if (state.currentCol === 5){
-                const word = getCurrentWord();
-                if(word == state.secret){
-                        revealWord(word);
-                        alert('YAY CONGRAGULATIONS JK')
-                   
+    if(!state.over){
+        console.log("this is id "+ this.id);
+        console.log(this.textContent);
+        const id = this.id;
+        if(id == "enter" || id == "backspace" ){
+            if(id == "enter"){
+                
+                if (state.currentCol === 4){
+                    const word = getCurrentWord();
+                    if(word == state.secret){
+                            revealWord(word);
+                            
+                    
+                    }
+                    else {isWordValid(word)}
                 }
-                else {isWordValid(word)}
+            }
+            if (id === "backspace"){
+                removeLetter();
             }
         }
-        if (id === "backspace"){
-            removeLetter();
+        else{
+            addLetter(this.textContent);
         }
-    }
-    else{
-        addLetter(this.textContent);
-    }
 
 
-    updateGrid();
+        updateGrid();
+    }
 }
 
 function drawKeyboard(container){
@@ -148,8 +210,8 @@ function drawKeyboard(container){
 function drawGrid(container){
     const grid = document.createElement('div');
     grid.className = 'grid';
-    for (let i = 0; i < 6; i++){
-        for (let j = 0; j< 5; j++){
+    for (let i = 0; i < 5; i++){
+        for (let j = 0; j< 4; j++){
             drawBox(grid, i ,j);
         }
     }
@@ -158,37 +220,59 @@ function drawGrid(container){
 
 }
 
+
 function registerKeyboardEvents(){
+
     document.body.onkeydown = (e) => {
-        const key = e.key;
-        if(key === 'Enter'){
-            if (state.currentCol === 5){
-                const word = getCurrentWord();
-                if(word == state.secret){
-                    revealWord(word)
-                    alert('YAY CONGRAGULATIONS JK')
-               
+        if (!state.over){
+            const key = e.key;
+            if(key === '5'){
+                console.log(state.currentRow);
             }
-            else {isWordValid(word)}
+            if(key === 'Enter'){
+                
+                if (state.currentCol === 4){
+                    const word = getCurrentWord();
+                    if(word == state.secret){
+                        revealWord(word)
+                        state.over = true;
+                        
+                        Toastify({
+                            text: "YAY! Good Job.",
+                            newWindow: true,
+                            className: "end",
+                            duration: -1,
+                            newWindow: false,
+                            position: "center",
+                            destination: window.location.href
+                            
+                            
+                
+                        }).showToast();
+                
+                }
+                else {isWordValid(word)}
+                }
             }
-        }
-        if (key === 'Backspace'){
-            removeLetter();
-        }
-        if (isLetter(key)){
-            addLetter(key);
-        }
+            if (key === 'Backspace'){
+                removeLetter();
+            }
+            if (isLetter(key)){
+                addLetter(key);
+            }
 
 
-        updateGrid();
+            updateGrid();
+        }
     };
+
 }
 function isLetter(key){
     return key.length === 1 && key.match(/[a-z]/i);
 }
 
 function addLetter(letter){
-    if(state.currentCol === 5) return;
+    if(state.currentCol === 4) return;
     state.grid[state.currentRow][state.currentCol] = letter;
     state.currentCol++;
 }
@@ -232,12 +316,51 @@ async function isWordValid(word){
 }
 
 
+function guessLetters(word){
+    let letters = word.charAt(0);
+    for(let i = 1 ; i < 4; i++){
+        if(!letters.includes(word.charAt(i))){
+            letters = letters + word.charAt(i);
+        }
+    }
+    return letters;
+}
+
+function guessLetterCount(guess, letters){
+    let count = "";
+    for(let i = 0; i < letters.length; i++){
+        let num = 0;
+        for (let j = 0; j < 4; j++){
+            if (letters.charAt(i) == guess.charAt(j)){
+                num++;
+            }
+        }
+        count = count + num.toString();
+    }
+    return count;
+}
+
+function getPositions(letter, word){
+    let positions = '';
+    for(let i = 0; i< 4; i++){
+        if (letter = word.charAt(i)) positions = positions + i.toString();
+    }
+
+    return positions;
+}
+
+
+
+
+
+
 
 
 function revealWord(guess){
     const row = state.currentRow;
+  
 
-    for(let i = 0; i < 5; i++){
+    for(let i = 0; i < 4; i++){
         const box = document.getElementById(`box${row}${i}`);
         const key = document.getElementById(guess.charAt(i));
         console.log("this is the guess " + guess.charAt(i));
@@ -259,15 +382,42 @@ function revealWord(guess){
         }
     }
 
-    const isGameOver = state.currentRow === 5;
+
+
+
+
+
+    // const isGameOver = state.currentRow === 4;
     
   
-        if (isGameOver && guess != state.secret){
-        alert('YOU SUCK \n YOU NEED A LIFE \nTHE SECRET WORD WAS \n' + state.secret )
-        }
+    //     if (isGameOver && guess != state.secret){
+    //     alert('YOU SUCK \n YOU NEED A LIFE \nTHE SECRET WORD WAS \n' + state.secret )
+    //     }
+   
+    endGame();
+    
  
 }
 
+function endGame(guess){
+    let isGameOver = state.currentRow === 4;
+    console.log(state.over);
+    if(isGameOver){
+        state.over =true;
+        Toastify({
+            text: "Game Over...ur bad...but nice try \n again? click me",
+            newWindow: true,
+            className: "end",
+            duration: -1,
+            newWindow: false,
+            position: "center",
+            destination: window.location.href
+            
+            
+
+        }).showToast();
+    }
+}
 
 
 async function errorPopUp(container){
@@ -289,9 +439,9 @@ function startup() {
     const game = document.getElementById('game');
     drawGrid(game);
     registerKeyboardEvents();
+   
     const keyboard = document.getElementById('keyboard')
     drawKeyboard(keyboard);
-    console.log(state.secret);
 }
 
 //anything you want that happens in the begining

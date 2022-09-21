@@ -1,20 +1,26 @@
-@import "/node_modules/toastify-js/src/toastify.css";
-
+@import "/toastify-js/src/toastify.css";
 
 h1{
-    font-size: 300%;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
-    color: green;
-    padding-bottom: 0%;
-    margin-bottom: 10px;
+    margin: 5px;
+
+    place-self: center;
+    font-size: 250%;
+    font-family:'Courier New', Courier, monospace;
+    text-align: center;
+    color: var(--default);
+    
+    padding-bottom: 0 px;
+    margin: 0;
     border-color: #35359c;
+    border-radius: 10px;
+
 }
 
-html,
-body{
-    background:var(--default);
 
+
+html{
+    background-image: url("cows.png");
 }
 
 
@@ -42,8 +48,8 @@ body{
 
 .grid{
     display: grid;
-    grid-template-rows: repeat(6, auto);
-    grid-template-columns: repeat(5, auto);
+    grid-template-rows: repeat(5, auto);
+    grid-template-columns: repeat(4, auto);
 }
 
 .keyboard1{
@@ -99,7 +105,10 @@ body{
     border-radius: 5px;
     content: "\01F8A0";
 }
-
+.end{
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
 .key{
     width: 30px;
     height: 70px;
@@ -117,7 +126,7 @@ body{
 }
 
 .box{
-    
+    background-color: var(--default);
     width: 60px;
     height: 60px;
     border: 2px solid var(--empty);
@@ -126,13 +135,13 @@ body{
     text-transform: uppercase;
     display: grid;
     place-items: center;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     font-size:2.4rem;
     border-radius: 10px;
 }
 
 .textWhite{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .box.empty{

@@ -24,7 +24,7 @@ function randomWord(arr){
         for(var j = 0; j < obj.length; j++){
             let obj2 = obj[j];
             if(obj2.word.length == 4){
-                console.log(obj2.word);
+                
                 number.push(obj2.word);
             }
         }
@@ -44,7 +44,7 @@ async function getWord(){
     for(var i = 0 ; i < words.length ; i++){
         var obj = words[i];
         var word = obj.word;
-        console.log(word);
+       
         const getWord = await fetch(`https://api.datamuse.com/words?rel_trg=${word}`);
         const json = await getWord.json();
         arr.push(json);

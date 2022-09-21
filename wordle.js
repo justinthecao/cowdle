@@ -1,5 +1,5 @@
 
-import Toastify from './toastify-js/src/toastify-es.js'
+import Toastify from '/toastify-js/src/toastify-es.js'
 
 
 

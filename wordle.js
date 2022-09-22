@@ -234,8 +234,9 @@ function registerKeyboardEvents(){
                 if (state.currentCol === 4){
                     const word = getCurrentWord();
                     if(word == state.secret){
-                        revealWord(word)
                         state.over = true;
+                        revealWord(word)
+                        
                         
                         Toastify({
                             text: "YAY! Good Job.",
@@ -363,7 +364,6 @@ function revealWord(guess){
     for(let i = 0; i < 4; i++){
         const box = document.getElementById(`box${row}${i}`);
         const key = document.getElementById(guess.charAt(i));
-        console.log("this is the guess " + guess.charAt(i));
         const letter = box.textContent;
 
         if (letter === state.secret[i]){
@@ -393,13 +393,14 @@ function revealWord(guess){
     //     if (isGameOver && guess != state.secret){
     //     alert('YOU SUCK \n YOU NEED A LIFE \nTHE SECRET WORD WAS \n' + state.secret )
     //     }
-   
+   if(!state.over){
     endGame();
+   }
     
  
 }
 
-function endGame(guess){
+function endGame(){
     let isGameOver = state.currentRow === 4;
     console.log(state.over);
     if(isGameOver){

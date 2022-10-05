@@ -1,6 +1,6 @@
 # COWDLE
 
-To Whom It May Concern,
+To Whom It May Concern, (this documentation is still in its early stages!)
 
 Welcome to my first HTML/CSS/JS shishkebob. I wanted to get some experience with front-end and ngl it was pretty fun. I took a lot of inspiration from Wordle that 
 became extremely popular in 2021 and revamped it to relate to one of my inside jokes with my friends - cows .. cao's. 

@@ -21,7 +21,7 @@ At first, I used a hardcoded dictionary to choose words and check words against,
   words relating to cows from. This part was the trickiest, since I had to get into requests and async functions and all that, but I was pretty happy it worked out in the end.
   
 
-What I really enjoyed was the Toasting popups that I found on a open source repo on github that were really easy to use and integrate to my project. 
+What I really enjoyed was the Toastify popups that I found on a open source repo on github that were really easy to use and integrate to my project. 
   Not only were they easily customizable but they had some functions that allowed me to code a lot less.
   
 On the css part, I looked up some tutorials on how to make some animations, but the rest of the classes and fields were mostly all trial and error. 

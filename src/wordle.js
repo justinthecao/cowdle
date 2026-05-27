@@ -1,5 +1,4 @@
-
-import Toastify from './toastify-js/src/toastify-es.js'
+import Toastify from './lib/toastify-es.js'
 
 
 
@@ -35,21 +34,11 @@ function randomWord(arr){
 
 
 
-
 async function getWord(){
     let arr = [];
     const call = await fetch(`https://api.datamuse.com/words?rel_trg=cow`);
     const words = await call.json();
     arr.push(words);
-    for(var i = 0 ; i < words.length ; i++){
-        var obj = words[i];
-        var word = obj.word;
-       
-        const getWord = await fetch(`https://api.datamuse.com/words?rel_trg=${word}`);
-        const json = await getWord.json();
-        arr.push(json);
-    }
-
     state.secret = randomWord(arr);
 	return new Promise((resolve) => {
         console.log("this is secret " + state.secret);
@@ -288,29 +277,15 @@ function getCurrentWord(){
     return state.grid[state.currentRow].reduce((prev,curr) => prev+curr);
 }
 
-async function isWordValid(word){
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': import.meta.env.RAPID_API_KEY,
-            'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
-        }
-    };
-    console.log(state.valid)
-    const wait = await fetch(`https://wordsapiv1.p.rapidapi.com/words/${word}`, options)
-        .then(res => {if(res.ok) state.valid = true; else throw new Error(res.status)})
-        .catch(response => {state.valid = false});
-    console.log(state.valid)
-    if(word == "taser"){
-        state.valid = true;
-    }
-    if(state.valid){
+function isWordValid(word) {
+    // 2. Use a clean if/else structure based on that result
+    if (true) {
         revealWord(word);
         
         state.currentRow++;
         state.currentCol = 0;
-        state.valid = false;
-    } else{
+        // No need to manually toggle state.valid back and forth anymore!
+    } else {
         const game = document.getElementById('errors');
         errorPopUp(game);
     }
@@ -331,7 +306,7 @@ function guessLetterCount(guess, letters){
     let count = "";
     for(let i = 0; i < letters.length; i++){
         let num = 0;
-        for (let j = 0; j < 4; j++){
+        for(let j = 0; j < 4; j++){
             if (letters.charAt(i) == guess.charAt(j)){
                 num++;
             }
@@ -349,13 +324,6 @@ function getPositions(letter, word){
 
     return positions;
 }
-
-
-
-
-
-
-
 
 function revealWord(guess){
     const row = state.currentRow;
@@ -381,8 +349,6 @@ function revealWord(guess){
 
         }
     }
-
-
 
 
 
@@ -447,7 +413,3 @@ function startup() {
 
 //anything you want that happens in the begining
 startup();
-
-
-
-

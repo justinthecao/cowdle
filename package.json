@@ -3,7 +3,6 @@
     "@types/node": "^18.7.8",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "toastify-js": "^1.12.0",
     "unirest": "^0.6.0"
   },
   "name": "olafinpineapples.github.io",
@@ -11,6 +10,9 @@
   "description": "wordle",
   "main": "wordle.js",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +26,6 @@
   },
   "homepage": "https://github.com/olafinpineapples/olafinpineapples.github.io#readme",
   "devDependencies": {
-    "@types/toastify-js": "^1.11.1"
+    "vite": "^5.1.0"
   }
 }

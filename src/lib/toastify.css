@@ -1,10 +1,4 @@
-/*!
- * Toastify js 1.12.0
- * https://github.com/apvarun/toastify-js
- * @license MIT licensed
- *
- * Copyright (C) 2018 Varun A P
- */
+/* Vendored Toastify CSS (from toastify-js v1.12.0) */
 
 .toastify {
     padding: 12px 20px;

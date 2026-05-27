@@ -292,7 +292,7 @@ async function isWordValid(word){
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': 'b1c4a03d8bmsh447cb94a8464348p12e0d1jsn6a24161449b4',
+            'X-RapidAPI-Key': import.meta.env.RAPID_API_KEY,
             'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
         }
     };

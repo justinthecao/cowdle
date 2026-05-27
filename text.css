@@ -1,4 +1,4 @@
-@import "./lib/toastify.css";
+@import "/toastify-js/src/toastify.css";
 
 h1{
     text-align: center;
@@ -22,6 +22,7 @@ h1{
 html{
     background-image: url("cows.png");
 }
+
 
 
 :root{
@@ -181,7 +182,7 @@ html{
     -webkit-animation: fade 3s linear;
     animation: fade 3s linear;
     
-    
+
     /* cursor: pointer; */
 }
 
@@ -213,3 +214,58 @@ html{
     from {opacity: 1;}
     to {opacity:0 ;}
   } 
+
+/* head{
+    width: 60px;
+    height: 60px;
+}
+
+body{background-color: #212825;}
+
+h1{
+    size: 300%;
+    color: rgb(255, 255, 255);
+    background-color: #212825;
+    text-align: center;
+    
+}
+
+.ui{
+    position:absolute;
+    top:200px;
+    width: 60;
+    height: 60;
+    
+}
+
+.ui.zero{
+    left:580px;
+}
+
+.ui.one{
+    left: 650px;
+   
+}
+
+.ui.two{
+    left: 720px;
+    
+}
+
+.ui.three{
+    left: 790px;
+   
+}
+
+.ui.four{
+    left: 860px;
+   
+}
+
+input[type="text"]{
+    width: 60px;
+    height: 60px;
+    font-size: 300%;
+    font-family: 'Times New Roman';
+    background-color: grey;
+} */
